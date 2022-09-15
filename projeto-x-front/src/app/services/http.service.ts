@@ -1,12 +1,18 @@
+import { Cotacao } from './../models/cotacao.model';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class HttpService {
   contador: string =
     'http://localhost:4000/contadores/630671a2b3dfa66834b7a2f2';
   coberturas: string = 'http://localhost:4000/coberturas';
+  cotacao: string = 'http://localhost:4000/cotacoes';
   cpfs: string = 'http://localhost:4000/apolices/cpf/?cpf=';
   constructor(private http: HttpClient) {}
 
@@ -23,5 +29,9 @@ export class HttpService {
     console.log(`${this.cpfs}${cpf}`);
 
     return data;
+  }
+  updateNumCotacao() {}
+  postCotacao(cotacao: Cotacao): Observable<Cotacao> {
+    return this.http.post<Cotacao>(this.cotacao, cotacao);
   }
 }

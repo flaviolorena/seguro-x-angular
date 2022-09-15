@@ -1,3 +1,6 @@
+import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
+
 import { DateService } from './../services/date.service';
 import { HttpService } from '../services/http.service';
 import { Component, OnInit } from '@angular/core';
@@ -25,15 +28,12 @@ export class CotacaoComponent implements OnInit {
   today: any = '';
   existeCPF: boolean = false;
   validaData: boolean = false;
-  avisoData: boolean = false;
 
   constructor(
     private httpService: HttpService,
-    private dateService: DateService
+    private dateService: DateService,
+    private router: Router
   ) {}
-  enviarCotacao() {
-    console.log(this.cotacao);
-  }
 
   ngOnInit(): void {
     this.dateService.vigencia();
@@ -44,6 +44,25 @@ export class CotacaoComponent implements OnInit {
     this.setMinMaxDate();
     this.getToday();
   }
+
+  enviarCotacao() {
+    this.httpService.updateNumCotacao();
+    console.log(this.cotacao);
+    const cotacao: Cotacao = {
+      n_cotacao: this.cotacao.n_cotacao,
+      nome: this.cotacao.nome,
+      cpf: this.cotacao.cpf,
+      inicioVigencia: this.cotacao.inicioVigencia,
+      terminoVigencia: this.cotacao.terminoVigencia,
+      valorRisco: this.cotacao.valorRisco,
+      cobertura: this.cotacao.cobertura,
+    };
+    this.httpService.postCotacao(cotacao).subscribe((res) => console.log(res));
+    this.router.navigate(['proposta'], {
+      queryParams: { proposta: cotacao.n_cotacao },
+    });
+  }
+
   getNumCotacao(): void {
     this.httpService
       .getContador()
@@ -62,6 +81,7 @@ export class CotacaoComponent implements OnInit {
     this.maxDate = this.dateService.maxDate;
   }
   coberturaChange(e: any) {
+    //deve setar o id e nao o nome
     const nome = e.value;
     this.coberturas.map((item) =>
       nome === item.nome ? (this.coberturaDescricao = item.descricao) : ''
@@ -88,10 +108,8 @@ export class CotacaoComponent implements OnInit {
     const data = new Date(e.value);
     if (data < this.minDate || data > this.maxDate) {
       this.validaData = true;
-      this.avisoData = true;
     } else {
       this.validaData = false;
-      this.avisoData = false;
     }
   }
 }

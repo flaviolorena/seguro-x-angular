@@ -6,9 +6,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CotacaoComponent } from './cotacao/cotacao.component';
 import { HttpClientModule } from '@angular/common/http';
+import { PropostaComponent } from './proposta/proposta.component';
 
 @NgModule({
-  declarations: [AppComponent, CotacaoComponent],
+  declarations: [AppComponent, CotacaoComponent, PropostaComponent],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],

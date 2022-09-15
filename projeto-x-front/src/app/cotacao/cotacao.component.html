@@ -50,7 +50,9 @@
 
     <div class="form__field">
       <label for="inicioVigencia" class="form__label">Início da vigência</label>
-      <span class="form__input w30"> {{ cotacao.inicioVigencia }} </span>
+      <span class="form__input w30">
+        {{ cotacao.inicioVigencia | date: "dd/MM/yyyy" }}
+      </span>
     </div>
 
     <div class="form__field">
@@ -79,7 +81,7 @@
         A data de vigência é obrigatória
       </div>
     </div>
-    <div *ngIf="avisoData" class="aviso">
+    <div *ngIf="validaData" class="aviso">
       A vigência deve estar entre {{ minDate | date: "dd/MM/yyyy" }} e
       {{ maxDate | date: "dd/MM/yyyy" }}
     </div>

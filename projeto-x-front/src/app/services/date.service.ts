@@ -31,6 +31,6 @@ export class DateService {
     const date = nextDay.getDate();
     const month = nextDay.getMonth();
     const year = nextDay.getFullYear();
-    this.dataVigencia = `${date}/${month}/${year}`;
+    this.dataVigencia = `${year}-${month}-${date}`;
   }
 }
