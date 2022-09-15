@@ -6,6 +6,4 @@ export interface Cotacao {
   terminoVigencia: string;
   valorRisco: string;
   cobertura: string;
-  minDate: number;
-  maxDate: string;
 }

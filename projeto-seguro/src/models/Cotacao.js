@@ -1,8 +1,4 @@
 import mongoose from "mongoose";
-import autoIncrement from 'mongoose-auto-increment';
-import db from '../config/dbConnect.js'
-
-// autoIncrement.initialize(db);
 
 const cotacaoSchema = new mongoose.Schema(
   {

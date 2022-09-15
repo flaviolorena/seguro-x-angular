@@ -7,6 +7,7 @@ export class HttpService {
   contador: string =
     'http://localhost:4000/contadores/630671a2b3dfa66834b7a2f2';
   coberturas: string = 'http://localhost:4000/coberturas';
+  cpfs: string = 'http://localhost:4000/apolices/cpf/?cpf=';
   constructor(private http: HttpClient) {}
 
   getContador(): Observable<any[]> {
@@ -15,6 +16,12 @@ export class HttpService {
   }
   getCoberturas(): Observable<any[]> {
     const data: any = this.http.get<any[]>(this.coberturas);
+    return data;
+  }
+  getCPF(cpf: any): Observable<any> {
+    const data: any = this.http.get<any>(`${this.cpfs}${cpf}`);
+    console.log(`${this.cpfs}${cpf}`);
+
     return data;
   }
 }

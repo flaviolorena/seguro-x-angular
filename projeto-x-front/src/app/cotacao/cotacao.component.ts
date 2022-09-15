@@ -17,12 +17,14 @@ export class CotacaoComponent implements OnInit {
     terminoVigencia: '',
     valorRisco: '',
     cobertura: '',
-    minDate: 0,
-    maxDate: '',
   };
+  minDate: any = '';
+  maxDate: any = '';
   coberturas: Array<any> = [];
   coberturaDescricao: string = '';
   today: any = '';
+  existeCPF: boolean = false;
+  validaData: boolean = false;
   avisoData: boolean = false;
 
   constructor(
@@ -56,8 +58,8 @@ export class CotacaoComponent implements OnInit {
     this.cotacao.inicioVigencia = this.dateService.dataVigencia;
   }
   setMinMaxDate() {
-    this.cotacao.minDate = this.dateService.minDate;
-    this.cotacao.maxDate = this.dateService.maxDate;
+    this.minDate = this.dateService.minDate;
+    this.maxDate = this.dateService.maxDate;
   }
   coberturaChange(e: any) {
     const nome = e.value;
@@ -68,27 +70,28 @@ export class CotacaoComponent implements OnInit {
   getToday() {
     return (this.today = new Date());
   }
-  terminoVigenciaChange(evento: any) {
-    const dateInput = new Date(evento);
-    const hoje = new Date();
-    console.log('vigencia', dateInput);
-    console.log('hoje', hoje);
-    const min = new Date(this.dateService.minDate);
-    const max = new Date(this.dateService.maxDate);
-    console.log('min :', min, 'max :', max);
-
-    if (dateInput < min || dateInput > max) {
-      this.avisoData = true;
-      setTimeout(() => (this.avisoData = false), 9000);
+  checkCPF(e: any) {
+    const cpf = e.value;
+    if (cpf.length === 11) {
+      console.log(cpf);
+      this.buscaCPF(cpf);
     }
-    // if (dateInput > max) {
-    //   this.avisoData = `A data máxima deve ser ${this.dateService.maxDate}`;
-    //   setTimeout(() => (this.avisoData = ''), 5000);
-    // }
-    // if (dateInput > max) {
-    //   this.avisoData = `A data máxima deve ser ${this.dateService.maxDate}`;
-    //   setTimeout(() => (this.avisoData = ''), 5000);
-    // }
+  }
+  buscaCPF(cpf: any) {
+    this.httpService
+      .getCPF(cpf)
+      .subscribe((value: any) =>
+        value.length !== 0 ? (this.existeCPF = true) : (this.existeCPF = false)
+      );
+  }
+  vigenciaChange(e: any) {
+    const data = new Date(e.value);
+    if (data < this.minDate || data > this.maxDate) {
+      this.validaData = true;
+      this.avisoData = true;
+    } else {
+      this.validaData = false;
+      this.avisoData = false;
+    }
   }
 }
-// data min e max devem ser separadas em verificação e exibição, sao formatos diferentes
