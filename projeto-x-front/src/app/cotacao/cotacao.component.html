@@ -1,0 +1,149 @@
+<section class="container">
+  <form (ngSubmit)="enviarCotacao()" class="form">
+    <h3 class="form__titulo">Formulário de Cotação</h3>
+
+    <label for="n_cotacao" class="form__label">Número da cotação:</label>
+    <span class="num_cotacao">{{ cotacao.n_cotacao }}</span>
+
+    <div class="form__field">
+      <label for="nome" class="form__label">Nome</label>
+      <input
+        type="text"
+        id="nome"
+        name="nome"
+        class="form__input w70"
+        required
+        [(ngModel)]="cotacao.nome"
+        #nome="ngModel"
+      />
+      <div *ngIf="nome.invalid && (nome.dirty || nome.touched)">
+        <div *ngIf="nome.errors?.['required']" class="aviso">
+          Nome é obrigatório
+        </div>
+      </div>
+    </div>
+
+    <div class="form__field">
+      <label for="cpf" class="form__label">CPF</label>
+      <input
+        type="text"
+        id="cpf"
+        name="cpf"
+        #cpf="ngModel"
+        required
+        class="form__input w30"
+        [(ngModel)]="cotacao.cpf"
+        minlength="11"
+        maxlength="11"
+      />
+      <div *ngIf="cpf.invalid && (cpf.dirty || cpf.touched)">
+        <div *ngIf="cpf.errors?.['required']" class="aviso">
+          CPF é obrigatório
+        </div>
+        <div *ngIf="cpf.errors?.['minlength']" class="aviso">
+          Digite 11 números do CPF
+        </div>
+      </div>
+    </div>
+
+    <div class="form__field">
+      <label for="inicioVigencia" class="form__label">Início da vigência</label>
+      <span class="form__input w30"> {{ cotacao.inicioVigencia }} </span>
+    </div>
+
+    <div class="form__field">
+      <label for="terminoVigencia" class="form__label"
+        >Término da vigência</label
+      >
+      <input
+        type="date"
+        id="terminoVigencia"
+        name="terminoVigencia"
+        class="form__input w30"
+        required
+        #terminoVigencia="ngModel"
+        [(ngModel)]="cotacao.terminoVigencia"
+        (ngModelChange)="terminoVigenciaChange($event)"
+      />
+    </div>
+    <div *ngIf="avisoData" class="aviso">
+      A vigência deve estar entre {{ cotacao.minDate | date: "dd/MM/yyyy" }} e
+      {{ cotacao.maxDate | date: "dd/MM/yyyy" }}
+    </div>
+    <div
+      *ngIf="
+        terminoVigencia.invalid &&
+        (terminoVigencia.dirty || terminoVigencia.touched)
+      "
+    >
+      <div *ngIf="terminoVigencia.errors?.['required']" class="aviso">
+        Data do término da vigência é obrigatória
+      </div>
+    </div>
+
+    <div class="form__field">
+      <label for="valorRisco" class="form__label">Valor em risco</label>
+
+      <input
+        type="number"
+        id="valorRisco"
+        name="valorRisco"
+        class="form__input w30"
+        min="5000.00"
+        max="1000000.00"
+        required
+        #valorRisco="ngModel"
+        [(ngModel)]="cotacao.valorRisco"
+        step="1"
+        placeholder="ex.: R$10.000,00"
+        [(ngModel)]="cotacao.valorRisco"
+        name="valorRisco"
+        required
+      />
+      <div
+        *ngIf="valorRisco.invalid && (valorRisco.dirty || valorRisco.touched)"
+      >
+        <div *ngIf="valorRisco.errors?.['required']" class="aviso">
+          O valor em risco é obrigatório
+        </div>
+        <div *ngIf="valorRisco.errors?.['min']" class="aviso">
+          O mínimo requerido é R$5.000,00
+        </div>
+        <div *ngIf="valorRisco.errors?.['max']" class="aviso">
+          O máximo permitido é R$1.000.000,00
+        </div>
+      </div>
+    </div>
+
+    <div class="form__field">
+      <label for="cobertura" class="form__label">Tipo da cobertura</label>
+      <select
+        id="cobertura"
+        name="cobertura"
+        required
+        #cobertura="ngModel"
+        class="form__input w50"
+        [(ngModel)]="cotacao.cobertura"
+        (change)="coberturaChange($event.target)"
+      >
+        <option hidden="true">Selecione a cobertura</option>
+        <option
+          *ngFor="let cobertura of coberturas"
+          value="{{ cobertura.nome }}"
+          (change)="coberturaChange($event.target)"
+        >
+          {{ cobertura.nome }}
+        </option>
+      </select>
+      <div *ngIf="cobertura.invalid && (cobertura.dirty || cobertura.touched)">
+        <div *ngIf="cobertura.errors?.['required']" class="aviso">
+          O tipo da cobertura é obrigatório
+        </div>
+      </div>
+      <span class="descCobertura w70"> {{ coberturaDescricao }} </span>
+    </div>
+    <div class="container-btn">
+      <button class="btn-elaborar" type="submit">Elaborar proposta</button>
+    </div>
+  </form>
+</section>
