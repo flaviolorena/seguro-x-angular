@@ -46,8 +46,8 @@ export class CotacaoComponent implements OnInit {
   }
 
   enviarCotacao() {
-    this.httpService.updateNumCotacao();
     console.log(this.cotacao);
+    this.httpService.updateNumCotacao();
     const cotacao: Cotacao = {
       n_cotacao: this.cotacao.n_cotacao,
       nome: this.cotacao.nome,
@@ -72,6 +72,7 @@ export class CotacaoComponent implements OnInit {
     this.httpService
       .getCoberturas()
       .subscribe((value: any) => (this.coberturas = value));
+    console.log(this.coberturas);
   }
   setDataVigencia(): void {
     this.cotacao.inicioVigencia = this.dateService.dataVigencia;
@@ -81,11 +82,12 @@ export class CotacaoComponent implements OnInit {
     this.maxDate = this.dateService.maxDate;
   }
   coberturaChange(e: any) {
-    //deve setar o id e nao o nome
-    const nome = e.value;
+    console.log(e.value);
+    const id = e.value;
     this.coberturas.map((item) =>
-      nome === item.nome ? (this.coberturaDescricao = item.descricao) : ''
+      id === item._id ? (this.coberturaDescricao = item.descricao) : ''
     );
+    console.log();
   }
   getToday() {
     return (this.today = new Date());

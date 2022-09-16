@@ -131,7 +131,7 @@
         <option hidden="true">Selecione a cobertura</option>
         <option
           *ngFor="let cobertura of coberturas"
-          value="{{ cobertura.nome }}"
+          value="{{ cobertura._id }}"
           (change)="coberturaChange($event.target)"
         >
           {{ cobertura.nome }}

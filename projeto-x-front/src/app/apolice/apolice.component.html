@@ -1,0 +1,58 @@
+<section class="container" *ngIf="apolice">
+  <div class="form">
+    <div class="form__field">
+      <label for="inicioVigencia" class="form__label">Número da apolice:</label>
+      <span class="apoliceInfo">
+        {{ apolice.n_apolice }}
+      </span>
+    </div>
+
+    <div class="form__field">
+      <label for="inicioVigencia" class="form__label">Nome:</label>
+      <span class="apoliceInfo">
+        {{ apolice.nome }}
+      </span>
+    </div>
+
+    <div class="form__field">
+      <label for="inicioVigencia" class="form__label">CPF:</label>
+      <span class="apoliceInfo"> {{ apolice.cpf }} </span>
+    </div>
+
+    <div class="form__field">
+      <label for="inicioVigencia" class="form__label"
+        >Início da vigência:</label
+      >
+      <span class="apoliceInfo">
+        {{ apolice.inicioVigencia | date: "dd/MM/yyyy" }}
+      </span>
+    </div>
+    <div class="form__field">
+      <label for="inicioVigencia" class="form__label"
+        >Término da vigência:</label
+      >
+      <span class="apoliceInfo">
+        {{ apolice.terminoVigencia | date: "dd/MM/yyyy" }}
+      </span>
+    </div>
+    <div class="form__field">
+      <label for="inicioVigencia" class="form__label">Valor em risco:</label>
+      <span class="apoliceInfo">R${{ apolice.valorRisco }} </span>
+    </div>
+    <div class="form__field">
+      <label class="form__label">Forma de pagamento:</label>
+      <span class="apoliceInfo"> </span>
+    </div>
+    <div class="form__field">
+      <label for="inicioVigencia" class="form__label">Cobertura:</label>
+      <span class="apoliceInfo">
+        {{ coberturaNome }}
+      </span>
+    </div>
+    <div class="form__field w70">
+      <span class="descricaoCobertura">
+        {{ coberturaDescricao }}
+      </span>
+    </div>
+  </div>
+</section>

@@ -1,12 +1,133 @@
-<p>proposta works!</p>
-<p>proposta works!</p>
-<p>proposta works!</p>
-<p>proposta works!</p>
-<p>proposta works!</p>
-<p>proposta works!</p>
-<p>proposta works!</p>
-<p>proposta works!</p>
-<p>proposta works!</p>
-<p>proposta works!</p>
-<p>proposta works!</p>
-<p>proposta works!</p>
+<section class="container" *ngIf="proposta">
+  <form (ngSubmit)="enviarProposta()" class="form">
+    <h3 class="form__titulo">Formulário de Proposta</h3>
+
+    <div class="form__field">
+      <label for="inicioVigencia" class="form__label"
+        >Número da proposta:</label
+      >
+      <span class="propostaInfo">
+        {{ proposta.n_proposta }}
+      </span>
+    </div>
+
+    <div class="form__field">
+      <label for="inicioVigencia" class="form__label">Nome:</label>
+      <span class="propostaInfo">
+        {{ proposta.nome }}
+      </span>
+    </div>
+
+    <div class="form__field">
+      <label for="inicioVigencia" class="form__label">CPF:</label>
+      <span class="propostaInfo"> {{ proposta.cpf }} </span>
+    </div>
+
+    <div class="form__field">
+      <label for="inicioVigencia" class="form__label"
+        >Início da vigência:</label
+      >
+      <span class="propostaInfo">
+        {{ proposta.inicioVigencia | date: "dd/MM/yyyy" }}
+      </span>
+    </div>
+    <div class="form__field">
+      <label for="inicioVigencia" class="form__label"
+        >Término da vigência:</label
+      >
+      <span class="propostaInfo">
+        {{ proposta.terminoVigencia | date: "dd/MM/yyyy" }}
+      </span>
+    </div>
+    <div class="form__field">
+      <label for="inicioVigencia" class="form__label">Valor em risco:</label>
+      <span class="propostaInfo">R${{ proposta.valorRisco }} </span>
+    </div>
+    <div class="form__field">
+      <label for="inicioVigencia" class="form__label">Cobertura:</label>
+      <span class="propostaInfo">
+        {{ coberturaNome }}
+      </span>
+    </div>
+    <div class="form__field w70">
+      <span class="descricaoCobertura">
+        {{ coberturaDescricao }}
+      </span>
+    </div>
+
+    <fieldset class="fieldPagamento">
+      <legend class="form__label">Forma de pagamento</legend>
+      <form (ngSubmit)="enviarProposta()" #propostaForm="ngForm" class="form">
+        <div class="form__field">
+          <label class="form__label">Valor a ser pago:</label>
+          <span class="propostaInfo"> R${{ proposta.valorPago }} </span>
+        </div>
+        <div class="form__field">
+          <label class="form__label">Selecione a forma de pagamento:</label>
+          <select
+            id="qtParcelas"
+            name="qtParcelas"
+            #qtParcelas="ngModel"
+            required
+            class="form__input"
+            [(ngModel)]="proposta.qtParcelas"
+          >
+            <option value="0">A vista: R$ {{ proposta.valorPago }}</option>
+            <option value="1">
+              Parcelado 1x: {{ calcParcelas(proposta.valorPago, 1) }}
+            </option>
+            <option value="2">
+              Parcelado 2x: R$ {{ calcParcelas(proposta.valorPago, 2) }}
+            </option>
+            <option value="3">
+              Parcelado 3x: R$ {{ calcParcelas(proposta.valorPago, 3) }}
+            </option>
+            <option value="4">
+              Parcelado 4x: R$ {{ calcParcelas(proposta.valorPago, 4) }}
+            </option>
+            <option value="5">
+              Parcelado 5x: R$ {{ calcParcelas(proposta.valorPago, 5) }}
+            </option>
+            <option value="6">
+              Parcelado 6x: R$ {{ calcParcelas(proposta.valorPago, 6) }}
+            </option>
+            <option value="7">
+              Parcelado 7x: R$ {{ calcParcelas(proposta.valorPago, 7) }}
+            </option>
+            <option value="8">
+              Parcelado 8x: R$ {{ calcParcelas(proposta.valorPago, 8) }}
+            </option>
+            <option value="9">
+              Parcelado 9x: R$ {{ calcParcelas(proposta.valorPago, 9) }}
+            </option>
+            <option value="10">
+              Parcelado 10x: R$ {{ calcParcelas(proposta.valorPago, 10) }}
+            </option>
+            <option value="11">
+              Parcelado 11x: R$ {{ calcParcelas(proposta.valorPago, 11) }}
+            </option>
+            <option value="12">
+              Parcelado 12x: R$ {{ calcParcelas(proposta.valorPago, 12) }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              qtParcelas.invalid && (qtParcelas.dirty || qtParcelas.touched)
+            "
+          >
+            <div *ngIf="qtParcelas.errors?.['required']" class="aviso">
+              A forma de pagamento é obrigatória
+            </div>
+          </div>
+        </div>
+        <button
+          class="btn-elaborar"
+          [disabled]="!propostaForm.valid"
+          type="submit"
+        >
+          Elaborar proposta
+        </button>
+      </form>
+    </fieldset>
+  </form>
+</section>
