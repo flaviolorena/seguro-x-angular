@@ -32,7 +32,6 @@ export class PropostaComponent implements OnInit {
   }
   getNumProposta() {
     const n_cotacao = window.location.search.replace('?proposta=', '');
-    console.log(n_cotacao);
     this.httpService.getProposta(n_cotacao).subscribe((res) => {
       this.proposta.n_proposta = res[0].n_proposta;
       this.proposta.nome = res[0].nome;
@@ -47,7 +46,6 @@ export class PropostaComponent implements OnInit {
     });
   }
   enviarProposta() {
-    console.log(this.proposta);
     const proposta: Proposta = {
       n_proposta: this.proposta.n_proposta,
       nome: this.proposta.nome,
@@ -59,6 +57,7 @@ export class PropostaComponent implements OnInit {
       qtParcelas: this.proposta.qtParcelas,
       cobertura: this.proposta.cobertura,
     };
+
     this.httpService
       .postProposta(proposta)
       .subscribe((res) => console.log(res));
@@ -67,14 +66,11 @@ export class PropostaComponent implements OnInit {
     });
   }
   setNomeCobertura(id: any) {
-    console.log(id);
     return this.coberturas.map((item) =>
       id === item._id ? (this.coberturaNome = item.nome) : ''
     );
   }
   setDescricaoCobertura(id: any) {
-    console.log(id);
-    console.log(this.coberturas);
     return this.coberturas.map((item) =>
       id === item._id ? (this.coberturaDescricao = item.descricao) : ''
     );

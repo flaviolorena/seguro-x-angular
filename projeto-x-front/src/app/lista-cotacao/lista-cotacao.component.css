@@ -1,0 +1,33 @@
+.container {
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+.form {
+  padding: 20px 40px;
+  margin: 30px 30px;
+  margin-bottom: 30px;
+  border: 1px solid rgb(212, 212, 212);
+  border-radius: 30px;
+  /* border-right: 1px solid rgb(212, 212, 212); */
+}
+.cotacaoInfo {
+  padding: 0 12px;
+  font-weight: 400;
+  font-size: 18px;
+  color: #4b4b4b;
+}
+.form__label {
+  margin-top: 20px;
+  margin-left: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #5f5f5f;
+}
+.form__field {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}

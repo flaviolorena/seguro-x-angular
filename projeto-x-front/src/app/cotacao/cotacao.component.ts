@@ -47,7 +47,9 @@ export class CotacaoComponent implements OnInit {
 
   enviarCotacao() {
     console.log(this.cotacao);
-    this.httpService.updateNumCotacao();
+    this.httpService
+      .updateNumCotacao(this.cotacao.n_cotacao)
+      .subscribe((res) => console.log(res, 'numero cotação atualizado'));
     const cotacao: Cotacao = {
       n_cotacao: this.cotacao.n_cotacao,
       nome: this.cotacao.nome,
@@ -57,7 +59,7 @@ export class CotacaoComponent implements OnInit {
       valorRisco: this.cotacao.valorRisco,
       cobertura: this.cotacao.cobertura,
     };
-    this.httpService.postCotacao(cotacao).subscribe((res) => console.log(res));
+    this.httpService.postCotacao(cotacao).subscribe((res) => console.log(''));
     this.router.navigate(['proposta'], {
       queryParams: { proposta: cotacao.n_cotacao },
     });
@@ -72,7 +74,6 @@ export class CotacaoComponent implements OnInit {
     this.httpService
       .getCoberturas()
       .subscribe((value: any) => (this.coberturas = value));
-    console.log(this.coberturas);
   }
   setDataVigencia(): void {
     this.cotacao.inicioVigencia = this.dateService.dataVigencia;
@@ -82,12 +83,10 @@ export class CotacaoComponent implements OnInit {
     this.maxDate = this.dateService.maxDate;
   }
   coberturaChange(e: any) {
-    console.log(e.value);
     const id = e.value;
     this.coberturas.map((item) =>
       id === item._id ? (this.coberturaDescricao = item.descricao) : ''
     );
-    console.log();
   }
   getToday() {
     return (this.today = new Date());
@@ -95,7 +94,6 @@ export class CotacaoComponent implements OnInit {
   checkCPF(e: any) {
     const cpf = e.value;
     if (cpf.length === 11) {
-      console.log(cpf);
       this.buscaCPF(cpf);
     }
   }

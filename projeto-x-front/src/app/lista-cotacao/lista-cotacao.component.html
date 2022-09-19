@@ -1,0 +1,43 @@
+<section class="container">
+  <div class="form" *ngFor="let cotacao of cotacoes.slice().reverse()">
+    <div class="form__field">
+      <label for="inicioVigencia" class="form__label">Número da cotacao:</label>
+      <span class="cotacaoInfo">
+        {{ cotacao.n_cotacao }}
+      </span>
+    </div>
+
+    <div class="form__field">
+      <label for="inicioVigencia" class="form__label">Nome:</label>
+      <span class="cotacaoInfo">
+        {{ cotacao.nome }}
+      </span>
+    </div>
+
+    <div class="form__field">
+      <label for="inicioVigencia" class="form__label">CPF:</label>
+      <span class="cotacaoInfo"> {{ cotacao.cpf }} </span>
+    </div>
+
+    <div class="form__field">
+      <label for="inicioVigencia" class="form__label"
+        >Início da vigência:</label
+      >
+      <span class="cotacaoInfo">
+        {{ cotacao.inicioVigencia | date: "dd/MM/yyyy" }}
+      </span>
+    </div>
+    <div class="form__field">
+      <label for="inicioVigencia" class="form__label"
+        >Término da vigência:</label
+      >
+      <span class="cotacaoInfo">
+        {{ cotacao.terminoVigencia | date: "dd/MM/yyyy" }}
+      </span>
+    </div>
+    <div class="form__field">
+      <label for="inicioVigencia" class="form__label">Valor em risco:</label>
+      <span class="cotacaoInfo">R${{ cotacao.valorRisco }} </span>
+    </div>
+  </div>
+</section>

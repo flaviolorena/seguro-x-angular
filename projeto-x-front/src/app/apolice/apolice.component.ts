@@ -10,6 +10,7 @@ import { HttpService } from '../services/http.service';
 export class ApoliceComponent implements OnInit {
   apolice: Apolice = {
     n_apolice: 0,
+    hash: '',
     nome: '',
     cpf: '',
     inicioVigencia: '',
@@ -33,8 +34,10 @@ export class ApoliceComponent implements OnInit {
     const n_apolice = window.location.search.replace('?apolice=', '');
     console.log(n_apolice);
     this.httpService.getApolice(n_apolice).subscribe((res) => {
+      console.log(res[0]);
       console.log('apolice', res[0].hash);
-      this.apolice.n_apolice = res[0].n_proposta;
+      this.apolice.n_apolice = res[0].n_apolice;
+      this.apolice.hash = res[0].hash;
       this.apolice.nome = res[0].nome;
       this.apolice.cpf = res[0].cpf;
       this.apolice.inicioVigencia = res[0].inicioVigencia;

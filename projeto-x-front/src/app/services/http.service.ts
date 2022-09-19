@@ -17,7 +17,7 @@ export class HttpService {
   cpfs: string = 'http://localhost:4000/apolices/cpf/?cpf=';
   proposta: string = 'http://localhost:4000/propostas/busca/?n_proposta=';
   propostas: string = 'http://localhost:4000/propostas/';
-  apolice: string = 'http://localhost:4000/propostas/busca/?n_apolice=';
+  apolice: string = 'http://localhost:4000/apolices/busca/?n_apolice=';
 
   constructor(private http: HttpClient) {}
 
@@ -34,12 +34,24 @@ export class HttpService {
 
     return data;
   }
-  updateNumCotacao() {}
+  updateNumCotacao(cotacao: any): Observable<any> {
+    cotacao += 1;
+    console.log(cotacao);
+    const body = { n_cotacao: `${cotacao}` };
+    const data: any = this.http.put<any[]>(this.contador, body);
+    return data;
+  }
+
   postCotacao(cotacao: Cotacao): Observable<Cotacao> {
     return this.http.post<Cotacao>(this.cotacao, cotacao);
   }
+  getCotacoes() {
+    const data: any = this.http.get<any>(this.cotacao);
+
+    return data;
+  }
   postProposta(proposta: Proposta): Observable<Proposta> {
-    return this.http.post<Proposta>(this.cotacao, proposta);
+    return this.http.post<Proposta>(this.propostas, proposta);
   }
 
   getProposta(proposta: any): Observable<any> {
@@ -48,8 +60,8 @@ export class HttpService {
     return data;
   }
   getApolice(apolice: any): Observable<any> {
-    const data: any = this.http.get<any>(`${this.proposta}${apolice}`);
-    console.log(`${this.proposta}${apolice}`);
+    console.log('denteo', apolice);
+    const data: any = this.http.get<any>(`${this.apolice}${apolice}`);
     return data;
   }
 }
