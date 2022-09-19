@@ -66,9 +66,13 @@ export class PropostaComponent implements OnInit {
     this.httpService
       .postProposta(proposta)
       .subscribe((res) => console.log(res));
-    this.router.navigate(['apolice'], {
-      queryParams: { apolice: proposta.n_proposta },
-    });
+    this.router
+      .navigate(['apolice'], {
+        queryParams: { apolice: proposta.n_proposta },
+      })
+      .then(() => {
+        window.location.reload();
+      });
   }
   setNomeCobertura(id: any) {
     return this.coberturas.map((item) =>
