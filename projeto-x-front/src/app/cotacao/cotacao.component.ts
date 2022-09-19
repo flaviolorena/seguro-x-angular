@@ -47,9 +47,7 @@ export class CotacaoComponent implements OnInit {
 
   enviarCotacao() {
     console.log(this.cotacao);
-    this.httpService
-      .updateNumCotacao(this.cotacao.n_cotacao)
-      .subscribe((res) => console.log(res, 'numero cotação atualizado'));
+    this.httpService.updateNumCotacao(this.cotacao.n_cotacao).subscribe();
     const cotacao: Cotacao = {
       n_cotacao: this.cotacao.n_cotacao,
       nome: this.cotacao.nome,
@@ -60,9 +58,13 @@ export class CotacaoComponent implements OnInit {
       cobertura: this.cotacao.cobertura,
     };
     this.httpService.postCotacao(cotacao).subscribe((res) => console.log(''));
-    this.router.navigate(['proposta'], {
-      queryParams: { proposta: cotacao.n_cotacao },
-    });
+    this.router
+      .navigate(['proposta'], {
+        queryParams: { proposta: cotacao.n_cotacao },
+      })
+      .then(() => {
+        window.location.reload();
+      });
   }
 
   getNumCotacao(): void {

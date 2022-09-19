@@ -36,7 +36,6 @@ export class HttpService {
   }
   updateNumCotacao(cotacao: any): Observable<any> {
     cotacao += 1;
-    console.log(cotacao);
     const body = { n_cotacao: `${cotacao}` };
     const data: any = this.http.put<any[]>(this.contador, body);
     return data;
@@ -55,12 +54,12 @@ export class HttpService {
   }
 
   getProposta(proposta: any): Observable<any> {
+    console.log('dentro de get', proposta);
     const data: any = this.http.get<any>(`${this.proposta}${proposta}`);
     console.log(`${this.proposta}${proposta}`);
     return data;
   }
   getApolice(apolice: any): Observable<any> {
-    console.log('denteo', apolice);
     const data: any = this.http.get<any>(`${this.apolice}${apolice}`);
     return data;
   }

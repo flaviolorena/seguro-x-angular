@@ -27,13 +27,18 @@ export class PropostaComponent implements OnInit {
   constructor(private httpService: HttpService, private router: Router) {}
 
   ngOnInit(): void {
-    this.getCoberturas();
+    // this.getNumProposta();
     this.getNumProposta();
+    this.getCoberturas();
   }
   getNumProposta() {
     const n_cotacao = window.location.search.replace('?proposta=', '');
+    console.log(n_cotacao);
     this.httpService.getProposta(n_cotacao).subscribe((res) => {
       this.proposta.n_proposta = res[0].n_proposta;
+      console.log('resposta:', res);
+      console.log('resposta n_proposta', res[0].n_proposta);
+      console.log('objeto alocado', this.proposta.n_proposta);
       this.proposta.nome = res[0].nome;
       this.proposta.cpf = res[0].cpf;
       this.proposta.inicioVigencia = res[0].inicioVigencia;
